@@ -2,10 +2,20 @@ import { useState, useEffect, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import ActivityFeed from './components/ActivityFeed.jsx'
+import FeatureList from './components/FeatureList.jsx'
 import StatePanel from './components/StatePanel.jsx'
 
 const API_BASE = 'http://localhost:5000'
 const MAX_TURNS = 8
+const APP_NAME = 'letscelebrate'
+const WELCOME_MESSAGE = `Hi, I'm ${APP_NAME}.
+
+- I suggest venues and vendor options
+- I build and adjust budgets as plans change
+- I track RSVPs and vendor status
+- I create schedules and reminders
+
+Tell me what you're planning and I'll take it from there.`
 
 function getOrCreateSessionId() {
   let id = localStorage.getItem('sessionId')
@@ -113,7 +123,7 @@ function App() {
         <div className="brand">
           <span className="brand-mark">✦</span>
           <div>
-            <h1>Solfinders</h1>
+            <h1>letscelebrate</h1>
             <p className="brand-sub">Autonomous event planning agent</p>
           </div>
         </div>
@@ -122,13 +132,17 @@ function App() {
         </span>
       </header>
 
+      <FeatureList />
+
       <div className="app-body">
         <section className="chat-column">
           <div className="message-thread">
             {messages.length === 0 && (
-              <p className="empty-note">
-                Tell me about the event you're planning — type, date, guest count, budget, location.
-              </p>
+              <div className="message message-agent">
+                <div className="message-bubble">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{WELCOME_MESSAGE}</ReactMarkdown>
+                </div>
+              </div>
             )}
             {messages.map((m, i) => (
               <div key={i} className={`message message-${m.role}`}>

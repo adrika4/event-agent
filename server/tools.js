@@ -2,18 +2,177 @@ const nodemailer = require("nodemailer");
 const { suggestVendors } = require("./vendors");
 
 const VENUES = [
-  { name: "Dwarka Community Hall", area: "Dwarka", capacity: 150, costPerHead: 800 },
-  { name: "Saket Banquet Lawns", area: "Saket", capacity: 300, costPerHead: 1200 },
-  { name: "Rohini Party Palace", area: "Rohini", capacity: 100, costPerHead: 600 },
-  { name: "CP Rooftop Venue", area: "Connaught Place", capacity: 80, costPerHead: 1500 },
-  { name: "Vasant Kunj Garden Venue", area: "Vasant Kunj", capacity: 200, costPerHead: 950 },
-  { name: "Suraya Garden Banquet", area: "Dwarka", capacity: 400, costPerHead: 1100 },
-  { name: "The Claridges Lawn", area: "Lutyens Delhi", capacity: 250, costPerHead: 2500 },
-  { name: "Chattarpur Farms & Lawns", area: "Chattarpur", capacity: 600, costPerHead: 1400 },
-  { name: "Punjabi Bagh Club", area: "Punjabi Bagh", capacity: 350, costPerHead: 1300 },
-  { name: "Mayur Banquets", area: "Mayur Vihar", capacity: 180, costPerHead: 750 },
-  { name: "Greater Kailash Celebration Hall", area: "Greater Kailash", capacity: 120, costPerHead: 1600 },
-  { name: "Alipur Luxury Farmhouse", area: "Alipur", capacity: 800, costPerHead: 1800 },
+  {
+    name: "Dwarka Community Hall",
+    area: "Dwarka",
+    capacity: 150,
+    costPerHead: 800,
+    rating: 4.1,
+    reviewCount: 186,
+    vibe: "Budget-friendly hall with practical layouts for neighborhood ceremonies.",
+  },
+  {
+    name: "Saket Banquet Lawns",
+    area: "Saket",
+    capacity: 300,
+    costPerHead: 1200,
+    rating: 4.3,
+    reviewCount: 512,
+    vibe: "Open-lawn format with dependable banquet flow for medium-large gatherings.",
+  },
+  {
+    name: "Rohini Party Palace",
+    area: "Rohini",
+    capacity: 100,
+    costPerHead: 600,
+    rating: 3.9,
+    reviewCount: 227,
+    vibe: "Compact and affordable for birthdays, engagements, and close family events.",
+  },
+  {
+    name: "CP Rooftop Venue",
+    area: "Connaught Place",
+    capacity: 80,
+    costPerHead: 1500,
+    rating: 4.2,
+    reviewCount: 341,
+    vibe: "Central skyline setting best for stylish evening socials and launches.",
+  },
+  {
+    name: "Vasant Kunj Garden Venue",
+    area: "Vasant Kunj",
+    capacity: 200,
+    costPerHead: 950,
+    rating: 4.2,
+    reviewCount: 294,
+    vibe: "Green outdoor ambiance with smooth guest circulation for daytime functions.",
+  },
+  {
+    name: "Suraya Garden Banquet",
+    area: "Dwarka",
+    capacity: 400,
+    costPerHead: 1100,
+    rating: 4.4,
+    reviewCount: 768,
+    vibe: "Large-format banquet known for lively wedding nights and reliable service.",
+  },
+  {
+    name: "The Claridges Lawn",
+    area: "Lutyens Delhi",
+    capacity: 250,
+    costPerHead: 2500,
+    rating: 4.7,
+    reviewCount: 689,
+    vibe: "Premium heritage lawn with polished execution for high-touch celebrations.",
+  },
+  {
+    name: "Chattarpur Farms & Lawns",
+    area: "Chattarpur",
+    capacity: 600,
+    costPerHead: 1400,
+    rating: 4.5,
+    reviewCount: 944,
+    vibe: "Sprawling farm-style venue ideal for big baraat entries and multi-stage events.",
+  },
+  {
+    name: "Punjabi Bagh Club",
+    area: "Punjabi Bagh",
+    capacity: 350,
+    costPerHead: 1300,
+    rating: 4.3,
+    reviewCount: 601,
+    vibe: "Club-style banquet with energetic atmosphere and consistently praised food.",
+  },
+  {
+    name: "Mayur Banquets",
+    area: "Mayur Vihar",
+    capacity: 180,
+    costPerHead: 750,
+    rating: 4.0,
+    reviewCount: 258,
+    vibe: "Value banquet with straightforward packages and responsive on-ground staff.",
+  },
+  {
+    name: "Greater Kailash Celebration Hall",
+    area: "Greater Kailash",
+    capacity: 120,
+    costPerHead: 1600,
+    rating: 4.4,
+    reviewCount: 333,
+    vibe: "Upscale indoor hall that suits intimate, design-forward city events.",
+  },
+  {
+    name: "Alipur Luxury Farmhouse",
+    area: "Alipur",
+    capacity: 800,
+    costPerHead: 1800,
+    rating: 4.6,
+    reviewCount: 421,
+    vibe: "Destination-style farmhouse with scale for grand weddings and receptions.",
+  },
+  {
+    name: "Omnia by Tivoli Dwarka",
+    area: "Dwarka",
+    capacity: 450,
+    costPerHead: 1700,
+    rating: 4.5,
+    reviewCount: 395,
+    vibe: "Grand premium entrance with strong catering, popular for weddings and corporate events.",
+  },
+  {
+    name: "ELATE By DROOL",
+    area: "Dwarka",
+    capacity: 250,
+    costPerHead: 1350,
+    rating: 4.5,
+    reviewCount: 674,
+    vibe: "Fits 100-250 guests, known for good food and hands-on coordinators.",
+  },
+  {
+    name: "Ambria Exotica",
+    area: "Dwarka",
+    capacity: 350,
+    costPerHead: 1800,
+    rating: 4.6,
+    reviewCount: 278,
+    vibe: "High-end wedding venue, strong on decor and attentive staff.",
+  },
+  {
+    name: "Ambria Pushpanjali",
+    area: "Dwarka",
+    capacity: 600,
+    costPerHead: 1600,
+    rating: 4.4,
+    reviewCount: 2038,
+    vibe: "Large and photogenic with strong food, guests report it's tricky to locate.",
+  },
+  {
+    name: "Regalia Eden",
+    area: "Dwarka",
+    capacity: 150,
+    costPerHead: 1200,
+    rating: 4.2,
+    reviewCount: 1712,
+    vibe: "Comfortable for 100-150 guests, food well-reviewed, cleanliness feedback mixed.",
+  },
+  {
+    name: "Devam Palace Banquet",
+    area: "Dwarka",
+    capacity: 220,
+    costPerHead: 1000,
+    rating: 4.3,
+    reviewCount: 143,
+    vibe: "Decor and staff praised, food quality reviews inconsistent.",
+  },
+  {
+    name: "Shree Manglam Banquet & Lawn",
+    area: "Dwarka",
+    capacity: 140,
+    costPerHead: 900,
+    rating: 4.9,
+    reviewCount: 39,
+    vibe: "Small review sample but consistently praised for family functions.",
+  },
 ];
 
 function calculateBudget({ totalBudget, attendees }) {
@@ -77,8 +236,38 @@ function generateSchedule({ eventType, startTime, endTime }) {
     { label: "Wrap-up", pct: 0.05 },
   ];
 
-  const start = new Date(`1970-01-01T${startTime}:00`);
-  const end = new Date(`1970-01-01T${endTime}:00`);
+  function parseTimeToDate(value) {
+    const raw = String(value || "").trim();
+
+    const ampmMatch = raw.match(/^(\d{1,2}):(\d{2})\s*([AaPp][Mm])$/);
+    if (ampmMatch) {
+      let hours = Number(ampmMatch[1]);
+      const minutes = Number(ampmMatch[2]);
+      const period = ampmMatch[3].toUpperCase();
+      if (hours >= 1 && hours <= 12 && minutes >= 0 && minutes <= 59) {
+        if (period === "AM") {
+          if (hours === 12) hours = 0;
+        } else if (hours !== 12) {
+          hours += 12;
+        }
+        return new Date(1970, 0, 1, hours, minutes, 0, 0);
+      }
+    }
+
+    const twentyFourMatch = raw.match(/^(\d{1,2}):(\d{2})$/);
+    if (twentyFourMatch) {
+      const hours = Number(twentyFourMatch[1]);
+      const minutes = Number(twentyFourMatch[2]);
+      if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {
+        return new Date(1970, 0, 1, hours, minutes, 0, 0);
+      }
+    }
+
+    return new Date(NaN);
+  }
+
+  const start = parseTimeToDate(startTime);
+  const end = parseTimeToDate(endTime);
   const totalMs = end - start;
 
   let cursor = start;

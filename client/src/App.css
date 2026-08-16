@@ -432,6 +432,94 @@ body {
 .state-list li { color: var(--ivory); }
 .state-list-past { color: var(--muted); text-decoration: line-through; }
 
+.state-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.state-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--bg-panel-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.state-metric strong {
+  color: var(--gold-bright);
+  font-size: 18px;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+.state-metric span {
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.guest-item,
+.vendor-item,
+.reminder-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--bg-panel-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.guest-name,
+.vendor-name,
+.reminder-label {
+  color: var(--ivory);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.reminder-date {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.status-proposed { background: rgba(201, 162, 39, 0.12); color: var(--gold-bright); border-color: rgba(201, 162, 39, 0.32); }
+.status-contacted { background: rgba(118, 154, 255, 0.1); color: #afc9ff; border-color: rgba(118, 154, 255, 0.28); }
+.status-confirmed { background: rgba(143, 190, 134, 0.12); color: var(--success); border-color: rgba(143, 190, 134, 0.3); }
+.status-declined { background: rgba(226, 87, 76, 0.12); color: #ffb3ab; border-color: rgba(226, 87, 76, 0.28); }
+.status-default { background: rgba(183, 166, 136, 0.12); color: var(--muted); border-color: rgba(183, 166, 136, 0.28); }
+
+.venue-copy { flex: 1; min-width: 0; }
+.venue-meta-rating {
+  margin-top: 4px;
+  color: var(--gold-bright);
+}
+.venue-vibe {
+  margin: 4px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 12px;
+}
+
 .budget-row { margin-bottom: 10px; }
 .budget-row-top { display: flex; justify-content: space-between; font-size: 12px; text-transform: capitalize; color: var(--ivory); margin-bottom: 4px; }
 .budget-bar-track { height: 6px; border-radius: 999px; background: var(--bg); overflow: hidden; }

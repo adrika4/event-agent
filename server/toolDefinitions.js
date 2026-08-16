@@ -28,7 +28,8 @@ module.exports = [
   },
   {
     name: "suggestVenues",
-    description: "Finds venues matching budget, headcount, and area",
+    description:
+      "Finds venues matching budget, headcount, and area. Returned venue objects include name, area, capacity, costPerHead, rating, reviewCount, and vibe.",
     parameters: {
       type: "object",
       properties: {
@@ -59,8 +60,8 @@ module.exports = [
       type: "object",
       properties: {
         eventType: { type: "string" },
-        startTime: { type: "string" },
-        endTime: { type: "string" },
+        startTime: { type: "string", description: "Start time in either 24-hour HH:MM (e.g. '14:00') or 12-hour h:MM AM/PM (e.g. '10:00 AM')." },
+        endTime: { type: "string", description: "End time in either 24-hour HH:MM (e.g. '22:00') or 12-hour h:MM AM/PM (e.g. '10:00 PM')." },
       },
       required: ["eventType", "startTime", "endTime"],
     },
