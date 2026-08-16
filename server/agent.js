@@ -76,6 +76,8 @@ function applyToolEffect(sessionId, name, args, result) {
       return updateState(sessionId, { expenses: result.expenses });
     case "trackVendor":
       return updateState(sessionId, { vendors: result.vendors });
+    case "computeReminderSchedule":
+      return updateState(sessionId, { reminderSchedule: result });
     case "adjustLogistics": {
       const patch = {};
       if (result.updatedPlan?.attendees != null) patch.attendees = result.updatedPlan.attendees;

@@ -260,6 +260,40 @@ function trackVendor({ existingVendors = [], name, category, contact, estimatedC
   return { action, vendor: vendors[idx >= 0 ? idx : vendors.length - 1], vendors };
 }
 
+// Deterministic reminder-date calculation relative to eventDate. Pure
+// function, no side effects — does NOT send anything. Sending still goes
+// through the existing sendReminder tool, only on explicit user request.
+function computeReminderSchedule({ eventDate }) {
+  if (!eventDate) throw new Error("computeReminderSchedule requires eventDate");
+
+  const event = new Date(eventDate);
+  if (isNaN(event.getTime())) {
+    throw new Error(`computeReminderSchedule: "${eventDate}" is not a valid date`);
+  }
+
+  const now = new Date();
+
+  // Offsets are easy to find/tune here — not buried in logic elsewhere.
+  const OFFSETS = [
+    { label: "RSVP reminder", daysBeforeEvent: 14 },
+    { label: "Vendor confirmation reminder", daysBeforeEvent: 7 },
+    { label: "Final reminder", daysBeforeEvent: 3 },
+  ];
+
+  const schedule = OFFSETS.map(({ label, daysBeforeEvent }) => {
+    const date = new Date(event);
+    date.setDate(date.getDate() - daysBeforeEvent);
+    return {
+      label,
+      daysBeforeEvent,
+      date: date.toISOString().slice(0, 10),
+      isPast: date < now,
+    };
+  });
+
+  return { eventDate, schedule };
+}
+
 module.exports = {
   calculateBudget,
   suggestVenues,
@@ -273,4 +307,5 @@ module.exports = {
   trackExpense,
   trackVendor,
   suggestVendors,
+  computeReminderSchedule,
 };

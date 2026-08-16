@@ -152,6 +152,18 @@ module.exports = [
     },
   },
   {
+    name: "computeReminderSchedule",
+    description:
+      "Calculates a real reminder schedule (RSVP reminder, vendor confirmation reminder, final reminder) as concrete dates counting back from the event date. This is READ-ONLY and does NOT send any email by itself — only call sendReminder separately, and only if the user explicitly asks to send one.",
+    parameters: {
+      type: "object",
+      properties: {
+        eventDate: { type: "string", description: "The event date, e.g. '2026-09-10' or 'September 10, 2026'." },
+      },
+      required: ["eventDate"],
+    },
+  },
+  {
     name: "suggestVendors",
     description:
       "Finds vendors from the static dataset filtered by category (catering, photography, decoration, dj, transport), area, and/or max cost.",
