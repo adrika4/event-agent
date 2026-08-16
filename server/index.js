@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 const express = require("express");
 const cors = require("cors");
 const crypto = require("crypto");
@@ -7,7 +7,26 @@ const { getState, resetState } = require("./eventStore");
 const { getEmitter } = require("./eventEmitter");
 
 const app = express();
-app.use(cors());
+
+// ALLOWED_ORIGIN can be a single URL or a comma-separated list, e.g.
+// "https://event-agent.vercel.app,http://localhost:5173"
+const allowedOrigins = (process.env.ALLOWED_ORIGIN || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (curl, server-to-server, health checks)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Origin ${origin} not allowed by CORS`));
+      }
+    },
+  })
+);
 app.use(express.json());
 
 app.post("/api/plan-event", async (req, res) => {
@@ -62,4 +81,5 @@ app.get("/api/activity/:sessionId", (req, res) => {
   });
 });
 
-app.listen(5000, () => console.log("Agent server on :5000"));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Agent server on :${PORT}`));

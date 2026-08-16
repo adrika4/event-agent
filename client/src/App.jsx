@@ -5,7 +5,7 @@ import ActivityFeed from './components/ActivityFeed.jsx'
 import FeatureList from './components/FeatureList.jsx'
 import StatePanel from './components/StatePanel.jsx'
 
-const API_BASE = 'http://localhost:5000'
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 const MAX_TURNS = 8
 const APP_NAME = 'letscelebrate'
 const WELCOME_MESSAGE = `Hi, I'm ${APP_NAME}.
